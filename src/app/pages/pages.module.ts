@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ComponentsModule } from '../components/components.module';
 import { BaseChartDirective } from 'ng2-charts';
+import { GraficsComponent } from './grafics/grafics.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { BaseChartDirective } from 'ng2-charts';
     DashboardComponent,
     ProgressComponent,
     PagesComponent,
+    GraficsComponent,
   ],
   imports: [
     CommonModule,

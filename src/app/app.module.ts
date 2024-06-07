@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { PagesModule } from './pages/pages.module';
 import { AuthModule } from './auth/auth.module';
 import { NoPageFoundComponent } from './no-page-found/no-page-found.component';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,9 @@ import { NoPageFoundComponent } from './no-page-found/no-page-found.component';
     PagesModule,
     AuthModule
   ],
-  providers: [],
+  providers: [
+    provideCharts(withDefaultRegisterables()),
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

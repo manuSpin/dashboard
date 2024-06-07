@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProgressComponent } from './progress/progress.component';
-
-
+import { GraficsComponent } from './grafics/grafics.component';
 
 const routes: Routes = [
   {
@@ -13,6 +12,7 @@ const routes: Routes = [
     children: [
       { path: '', component: DashboardComponent },
       { path: 'progress', component: ProgressComponent },
+      { path: 'grafics', component: GraficsComponent },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     ]
   }
