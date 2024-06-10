@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { ComponentsModule } from '../components/components.module';
 import { BaseChartDirective } from 'ng2-charts';
 import { GraficsComponent } from './grafics/grafics.component';
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { GraficsComponent } from './grafics/grafics.component';
     ProgressComponent,
     PagesComponent,
     GraficsComponent,
+    AccountSettingsComponent,
   ],
   imports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { GraficsComponent } from './grafics/grafics.component';
     DashboardComponent,
     ProgressComponent,
     PagesComponent,
+    AccountSettingsComponent,
   ]
 })
 export class PagesModule { }
