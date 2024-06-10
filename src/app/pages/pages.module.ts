@@ -10,6 +10,8 @@ import { ComponentsModule } from '../components/components.module';
 import { BaseChartDirective } from 'ng2-charts';
 import { GraficsComponent } from './grafics/grafics.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { PromisesComponent } from './promises/promises.component';
+import { RxjsComponent } from './rxjs/rxjs.component';
 
 
 @NgModule({
@@ -19,6 +21,8 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
     PagesComponent,
     GraficsComponent,
     AccountSettingsComponent,
+    PromisesComponent,
+    RxjsComponent,
   ],
   imports: [
     CommonModule,
