@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { ResponseGoogleAPILogin, ResponseLoginGoogle, ResponseLogin } from '../../interfaces/responses.interface';
 
 declare const google: any;
+declare const gapi: any;
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ export class LoginComponent implements AfterViewInit {
   });
 
   public formSubmitted = false;
+  public auth2: any;
 
   constructor(private router: Router,
     private fb: FormBuilder,
@@ -31,7 +33,7 @@ export class LoginComponent implements AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    this.googleInit();
+    this.renderButton();
   }
 
 
@@ -39,7 +41,6 @@ export class LoginComponent implements AfterViewInit {
     this.formSubmitted = true;
     if (this.loginForm.valid) {
       this.usuarioService.login(this.loginForm.value).subscribe((response: ResponseLogin) => {
-        console.log(response);
         if (response.ok) {
 
           if (this.loginForm.get('rememberMe')?.value) {
@@ -71,24 +72,18 @@ export class LoginComponent implements AfterViewInit {
     }
   }
 
-  public googleInit() {
-    google.accounts.id.initialize({
-      client_id: "455434417213-r3p6utdoc9d2nv8b76g7a664l9b11qn1.apps.googleusercontent.com",
-      callback: (response: ResponseGoogleAPILogin) => this.handleCredentialResponse(response)
-    });
 
+  public async renderButton() {
     google.accounts.id.renderButton(
       this.googleBtn?.nativeElement,
       { theme: "outline", size: "large" }
     );
-  }
 
-  public handleCredentialResponse(response: ResponseGoogleAPILogin) {
-    console.log("Encoded JWT ID Token: " + response.credential);
+    await this.usuarioService.googleInit();
+    // this.auth2 = this.usuarioService.auth2;
 
-    this.usuarioService.loginGoogle(response.credential).subscribe((response: ResponseLoginGoogle) => {
-      this.router.navigateByUrl('/');
-    });
+    // this.attachSignin(document.getElementById('my-signin2'));
+
   }
 
 }
