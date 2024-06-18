@@ -11,6 +11,11 @@ export interface ResponseCreateUser {
   usuario: Usuario;
 }
 
+export interface ResponseUpdateUser {
+  ok: boolean;
+  usuario: Usuario;
+}
+
 export interface ResponseGoogleAPILogin {
   clientId:   string;
   client_id:  string;
@@ -26,4 +31,9 @@ export interface ResponseLoginGoogle {
   token:   string;
 }
 
+export interface ResponseUploadImg {
+  ok:       boolean;
+  filename: string;
+  msg:      string;
+}
 

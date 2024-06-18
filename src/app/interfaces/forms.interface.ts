@@ -6,3 +6,10 @@ export interface RegisterForm {
   confirmPassword: string;
   terminos: boolean;
 }
+
+export interface UpdateUserForm {
+  nombre: string;
+  apellidos: string;
+  email: string;
+  role: string;
+}

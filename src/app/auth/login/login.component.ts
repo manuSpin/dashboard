@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import Swal from 'sweetalert2';
 import { ResponseGoogleAPILogin, ResponseLoginGoogle, ResponseLogin } from '../../interfaces/responses.interface';
+import { AuthService } from '../../services/auth.service';
 
 declare const google: any;
 declare const gapi: any;
@@ -28,7 +29,7 @@ export class LoginComponent implements AfterViewInit {
 
   constructor(private router: Router,
     private fb: FormBuilder,
-    private usuarioService: UsuarioService
+    private authService: AuthService
   ) { }
 
 
@@ -40,7 +41,7 @@ export class LoginComponent implements AfterViewInit {
   public login() {
     this.formSubmitted = true;
     if (this.loginForm.valid) {
-      this.usuarioService.login(this.loginForm.value).subscribe((response: ResponseLogin) => {
+      this.authService.login(this.loginForm.value).subscribe((response: ResponseLogin) => {
         if (response.ok) {
 
           if (this.loginForm.get('rememberMe')?.value) {
@@ -79,11 +80,7 @@ export class LoginComponent implements AfterViewInit {
       { theme: "outline", size: "large" }
     );
 
-    await this.usuarioService.googleInit();
-    // this.auth2 = this.usuarioService.auth2;
-
-    // this.attachSignin(document.getElementById('my-signin2'));
-
+    await this.authService.googleInit();
   }
 
 }

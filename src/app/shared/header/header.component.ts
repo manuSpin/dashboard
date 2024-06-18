@@ -1,18 +1,23 @@
-import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { UsuarioService } from '../../services/usuario.service';
+import { Usuario } from '../../models/usuario.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styles: ``
-})
-export class HeaderComponent {
+  })
+  export class HeaderComponent {
 
-  constructor(private usuarioService: UsuarioService) { }
+  public usuario!: Usuario;
+  public fullname: string = '';
+
+  constructor(private authService: AuthService) {
+    this.usuario = this.authService.usuario;
+  }
 
   public logout() {
-    this.usuarioService.logout();
+    this.authService.logout();
   }
 
 }

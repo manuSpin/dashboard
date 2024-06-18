@@ -8,6 +8,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { authGuard } from '../guards/auth.guard';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -15,11 +16,12 @@ const routes: Routes = [
     component: PagesComponent,
     canActivate: [authGuard],
     children: [
-      { path: '', component: DashboardComponent, data: { title: 'Dashboard' } },
-      { path: 'account-settings', component: AccountSettingsComponent, data: { title: 'Account Setting' } },
-      { path: 'grafics', component: GraficsComponent, data: { title: 'Grafics' } },
-      { path: 'progress', component: ProgressComponent, data: { title: 'Progress Bar' } },
-      { path: 'promises', component: PromisesComponent, data: { title: 'Promises' } },
+      { path: '', component: DashboardComponent, data: { title: 'Inicio' } },
+      { path: 'account-settings', component: AccountSettingsComponent, data: { title: 'Ajustes' } },
+      { path: 'grafics', component: GraficsComponent, data: { title: 'Gráficas' } },
+      { path: 'progress', component: ProgressComponent, data: { title: 'Barras de progreso' } },
+      { path: 'promises', component: PromisesComponent, data: { title: 'Promesas' } },
+      { path: 'profile', component: ProfileComponent, data: { title: 'Perfil del usuario' } },
       { path: 'rxjs', component: RxjsComponent, data: { title: 'RxJs' } },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     ]

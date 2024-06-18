@@ -8,14 +8,18 @@
     <nav class="sidebar-nav">
       <ul id="sidebarnav">
         <li class="user-profile">
-          <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img
-              src="./assets/images/users/profile.png" alt="user" /><span class="hide-menu">Steave Jobs </span></a>
+          <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+            <img [src]="usuario.imageUrl" alt="user" />
+            <span class="hide-menu">
+              {{ usuario.nombre + ' ' + usuario.apellidos | slice:0:20 }} {{ ((usuario.nombre + ' ' + usuario.apellidos).length > 20) ? '...' : '' }}
+            </span>
+          </a>
           <ul aria-expanded="false" class="collapse">
-            <li><a routerLink="routePath" routerLinkActive="router-link-active">My Profile </a></li>
-            <li><a routerLink="routePath" routerLinkActive="router-link-active">My Balance</a></li>
-            <li><a routerLink="routePath" routerLinkActive="router-link-active">Inbox</a></li>
-            <li><a routerLink="account-settings" routerLinkActive="router-link-active">Account Setting</a></li>
-            <li><a (click)="logout()" class="cursor" routerLinkActive="router-link-active">Logout</a></li>
+            <li><a routerLink="profile" routerLinkActive="active">Mi perfil</a></li>
+            <li><a routerLink="routePath" routerLinkActive="active">Mi balance</a></li>
+            <li><a routerLink="routePath" routerLinkActive="active">Correos</a></li>
+            <li><a routerLink="account-settings" routerLinkActive="active">Ajustes</a></li>
+            <li><a routerLink="logout" (click)="logout()" class="cursor">Salir</a></li>
           </ul>
         </li>
         <li class="nav-devider"></li>
@@ -29,7 +33,8 @@
           </a>
           <ul aria-expanded="false" class="collapse">
             <li *ngFor="let subItem of item.submenu">
-              <a [routerLink]="subItem.url" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ subItem.title }}</a>
+              <a [routerLink]="subItem.url" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{
+                subItem.title }}</a>
             </li>
 
           </ul>
