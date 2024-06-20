@@ -9,7 +9,7 @@ export interface RegisterForm {
 
 export interface UpdateUserForm {
   nombre: string;
-  apellidos: string;
+  apellidos?: string;
   email: string;
   role: string;
 }

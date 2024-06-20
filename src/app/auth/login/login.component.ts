@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import Swal from 'sweetalert2';
 import { ResponseGoogleAPILogin, ResponseLoginGoogle, ResponseLogin } from '../../interfaces/responses.interface';
 import { AuthService } from '../../services/auth.service';
+import { Subscription } from 'rxjs';
 
 declare const google: any;
 declare const gapi: any;
@@ -14,7 +15,7 @@ declare const gapi: any;
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('googleBtn') public googleBtn?: ElementRef;
 
@@ -27,10 +28,11 @@ export class LoginComponent implements AfterViewInit {
   public formSubmitted = false;
   public auth2: any;
 
+  public loginSubscription?: Subscription;
+
   constructor(private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService) { }
 
 
   ngAfterViewInit(): void {
@@ -81,6 +83,12 @@ export class LoginComponent implements AfterViewInit {
     );
 
     await this.authService.googleInit();
+  }
+
+  ngOnDestroy(): void {
+    if (this.loginSubscription) {
+      this.loginSubscription.unsubscribe();
+    }
   }
 
 }

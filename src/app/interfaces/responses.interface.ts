@@ -1,3 +1,5 @@
+import { Hospital } from "../models/hospital.model";
+import { Medico } from "../models/medico.model";
 import { Usuario } from "../models/usuario.model";
 
 export interface ResponseLogin {
@@ -36,4 +38,24 @@ export interface ResponseUploadImg {
   filename: string;
   msg:      string;
 }
+
+export interface ResponseUsersList {
+  ok:       boolean;
+  usuarios: Usuario[];
+  total:    number;
+}
+
+export interface ResponseSearchByCollection {
+  ok:         boolean;
+  resultados: Usuario[] | Hospital[] | Medico[];
+  total:      number;
+}
+
+export interface ResponseDelete {
+  ok: boolean;
+  msg: string;
+}
+
+
+
 

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import Swal from 'sweetalert2';
 import { ResponseCreateUser } from '../../interfaces/responses.interface';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { ResponseCreateUser } from '../../interfaces/responses.interface';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
 
   public registerForm: FormGroup = this.fb.group({
     nombre: ['', Validators.required],
@@ -26,10 +27,11 @@ export class RegisterComponent {
 
   public formSubmitted = false;
 
+  public createUserSubscription?: Subscription;
+
   constructor(private fb: FormBuilder,
     private router: Router,
-    private usuarioService: UsuarioService
-  ) { }
+    private usuarioService: UsuarioService) { }
 
   public createUser() {
     this.formSubmitted = true;
@@ -94,7 +96,12 @@ export class RegisterComponent {
         password2Control?.setErrors({notEqual: true});
       }
     }
+  }
 
+  ngOnDestroy(): void {
+    if (this.createUserSubscription) {
+      this.createUserSubscription.unsubscribe();
+    }
   }
 
 }

@@ -77,7 +77,7 @@ export class AuthService {
     return this.http.get<ResponseCreateUser>(this.baseUrl + '/login/renew', this.headersWithToken).pipe(
       map((response: ResponseCreateUser) => {
         const { nombre, apellidos, email, google, role, uid, img } = response.usuario;
-        this.usuario = new Usuario(nombre, apellidos, email, '', role, google, img, uid);
+        this.usuario = new Usuario(nombre, email, '', role, google, apellidos, img, uid);
         localStorage.setItem('token', response.token);
 
         return true;

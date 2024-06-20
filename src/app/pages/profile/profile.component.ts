@@ -1,25 +1,28 @@
 import { FileType } from './../../interfaces/file-type.enum';
 import { Usuario } from './../../models/usuario.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
 import { AuthService } from '../../services/auth.service';
 import { ResponseUpdateUser, ResponseUploadImg } from '../../interfaces/responses.interface';
 import { FileUploadService } from '../../services/file-upload.service';
 import Swal from 'sweetalert2';
-import { HttpResponseBase } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styles: ``
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
   public profileForm?: FormGroup;
   public usuario!: Usuario;
   public fileToUpload?: File;
   public imgTemp: string | ArrayBuffer | null = null;
+
+  public editUserSubscription?: Subscription;
+  public updlaodImgSubscription?: Subscription;
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
@@ -32,14 +35,13 @@ export class ProfileComponent implements OnInit {
     this.profileForm = this.fb.group({
       nombre: [this.usuario.nombre || '', [Validators.required]],
       apellidos: [this.usuario.apellidos || ''],
-      email: [this.usuario.email || '', [Validators.required, Validators.email]]
+      email: [this.usuario.email || '', [Validators.required, Validators.email]],
+      role: [this.usuario.role]
     });
   }
 
   public updateProfile(): void {
-    console.log(this.profileForm?.value);
-
-    this.usuariosService.editUser(this.profileForm?.value).subscribe((response: ResponseUpdateUser) => {
+    this.editUserSubscription = this.usuariosService.editUser(this.profileForm?.value, this.authService.userId).subscribe((response: ResponseUpdateUser) => {
       Swal.fire({
         title: 'Fantástico',
         text: 'El usuario se ha actualizado correctamente',
@@ -77,7 +79,7 @@ export class ProfileComponent implements OnInit {
   }
 
   public uploadImg() {
-    this.fileUploadService.updatePhoto(this.fileToUpload!, FileType.usuarios, this.usuario.uid!).subscribe((response: ResponseUploadImg) => {
+    this.updlaodImgSubscription = this.fileUploadService.updatePhoto(this.fileToUpload!, FileType.usuarios, this.usuario.uid!).subscribe((response: ResponseUploadImg) => {
       const title = response.ok ? 'Fantástico' : 'Error';
       const icon = response.ok ? 'success' : 'error';
 
@@ -92,6 +94,16 @@ export class ProfileComponent implements OnInit {
         this.usuario.img = response.filename;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.editUserSubscription) {
+      this.editUserSubscription.unsubscribe();
+    }
+
+    if (this.updlaodImgSubscription) {
+      this.updlaodImgSubscription.unsubscribe();
+    }
   }
 
 }
