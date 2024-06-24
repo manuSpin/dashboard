@@ -1,14 +1,12 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../../services/usuario.service';
 import Swal from 'sweetalert2';
-import { ResponseGoogleAPILogin, ResponseLoginGoogle, ResponseLogin } from '../../interfaces/responses.interface';
+import { ResponseLogin } from '../../interfaces/responses.interface';
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
 
 declare const google: any;
-declare const gapi: any;
 
 @Component({
   selector: 'app-login',
@@ -79,7 +77,7 @@ export class LoginComponent implements AfterViewInit, OnDestroy {
   public async renderButton() {
     google.accounts.id.renderButton(
       this.googleBtn?.nativeElement,
-      { theme: "outline", size: "large" }
+      { theme: 'outline', size: 'large' }
     );
 
     await this.authService.googleInit();

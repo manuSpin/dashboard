@@ -16,12 +16,11 @@ export class ImageRoutePipe implements PipeTransform {
       return object.img;
     }
 
-    if (!object.uid && !object.img) {
+    if (!object || !object.uid || !object.img) {
       return this.baseUrl + '/uploads/no-image.jpg';
     }
 
     return this.baseUrl + '/uploads/' + type + '/' + object.img;
-
   }
 
 }

@@ -8,9 +8,9 @@ export class Medico {
   public img?: string;
   public uid?: string;
   public creator: Usuario;
-  public hospital: Hospital;
+  public hospital: LightHospital;
 
-  constructor(nombre: string, creator: Usuario, hospital: Hospital, apellidos?: string, img?: string, uid?: string) {
+  constructor(nombre: string, creator: Usuario, hospital: LightHospital, apellidos?: string, img?: string, uid?: string) {
     this.nombre = nombre;
     this.apellidos = apellidos;
     this.img = img;
@@ -28,3 +28,10 @@ export class Medico {
     }
   }
 }
+
+interface LightHospital {
+  _id: string;
+  nombre: string;
+}
+
+

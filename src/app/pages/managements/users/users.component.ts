@@ -45,7 +45,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.loadUsers();
 
     this.imgUploadedSubscription = this.modalService.imgUploaded.pipe(delay(1000)).subscribe(response => {
-      console.log(response);
       this.loadUsers();
     });
   }
@@ -68,7 +67,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   public loadUsersFiltered(value: string): void {
     this.loading = true;
 
-    this.getUsersFilteredSubscription = this.searchesService.searchCollectionBy(FileType.usuarios, value, this.from, this.size).subscribe((response: ResponseSearchByCollection) => {
+    this.getUsersFilteredSubscription = this.searchesService.searchCollectionBy(this.type, value, this.from, this.size).subscribe((response: ResponseSearchByCollection) => {
       this.usersList = response.resultados as Usuario[];
       this.total = response.total;
 
@@ -80,7 +79,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     });
   }
 
-  public changeValues(value: number) {
+  public changeValues(value: number): void {
     this.actualSize += value;
     this.from += value;
 
@@ -100,44 +99,38 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.selectSearch();
   }
 
-  public cleanSearch() {
+  public cleanSearch(): void {
     this.searchInput.nativeElement.value = '';
     this.term = '';
 
     this.selectSearch();
   }
 
-  public deleteUser(usuario: Usuario) {
-
-    console.log(this.authService.userId);
-    console.log(usuario.uid);
-    console.log(usuario.uid === this.authService.userId);
-
+  public deleteUser(usuario: Usuario): void {
     if (usuario.uid === this.authService.userId) {
-      console.log('entra');
       Swal.fire({
-        title: "Error",
-        text: "No puede borrar el usuario con el que se ha logado",
-        icon: "error"
+        title: 'Error',
+        text: 'No puede borrar el usuario con el que se ha logado',
+        icon: 'error'
       });
     } else {
       Swal.fire({
-        title: "¿Estás seguro?",
-        text: "Está a punto de borrar al usuario " + usuario.nombre + " " + usuario.apellidos + ". No puede deshacer esta acción.",
-        icon: "warning",
+        title: '¿Estás seguro?',
+        text: 'Está a punto de borrar al usuario ' + usuario.nombre + ' ' + usuario.apellidos + '. No puede deshacer esta acción.',
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Si",
-        cancelButtonText: "No"
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No'
 
       }).then((result) => {
         if (result.isConfirmed) {
           this.deleteUserSubscription = this.usuarioSservice.deleteUser(usuario.uid!).subscribe((response: ResponseDelete) => {
             Swal.fire({
-              title: "Borrado",
+              title: 'Borrado',
               text: response.msg,
-              icon: "success"
+              icon: 'success'
             });
           });
 
@@ -163,7 +156,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
 
     this.editUserSubscription = this.usuarioSservice.editUser(formData, user.uid!).subscribe((response: ResponseUpdateUser) => {
-      console.log('llega');
       Swal.fire({
         title: 'Fantástico',
         text: 'El usuario se ha actualizado correctamente',
@@ -173,11 +165,11 @@ export class UsersComponent implements OnInit, OnDestroy {
     });
   }
 
-  public openImageModal(user: Usuario) {
-    this.modalService.openModal(FileType.usuarios, user.uid!, user.img);
+  public openImageModal(user: Usuario): void {
+    this.modalService.openModal(this.type, user.uid!, user.img);
   }
 
-  private selectSearch() {
+  private selectSearch(): void {
     if (this.term.length === 0) {
       this.loadUsers();
 
