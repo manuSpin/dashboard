@@ -31,6 +31,10 @@ export class AuthService {
     return this.usuario.uid!;
   }
 
+  public get userRole(): string {
+    return this.usuario.role;
+  }
+
   constructor(private http: HttpClient,
     private router: Router
   ) {
@@ -41,6 +45,7 @@ export class AuthService {
     return this.http.post<ResponseLogin>(this.baseUrl + '/login', formData).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
+        localStorage.setItem('menu',JSON.stringify(response.menu));
       })
     );
   }
@@ -49,12 +54,14 @@ export class AuthService {
     return this.http.post<ResponseLoginGoogle>(this.baseUrl + '/login/google', { token }).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
+        localStorage.setItem('menu',JSON.stringify(response.menu));
       })
     );
   }
 
   public logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
 
     const userGoogle: UserGoogle = JSON.parse(localStorage.getItem('userGoogle') as string);
 
@@ -79,6 +86,7 @@ export class AuthService {
         const { nombre, apellidos, email, google, role, uid, img } = response.usuario;
         this.usuario = new Usuario(nombre, email, '', role, google, apellidos, img, uid);
         localStorage.setItem('token', response.token);
+        localStorage.setItem('menu',JSON.stringify(response.menu));
 
         return true;
       }),

@@ -1,34 +1,23 @@
 import { Injectable } from '@angular/core';
 import { MenuItem } from '../interfaces/menu.interface';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SidebarService {
 
-  public menu: MenuItem[] = [
-    {
-      title: 'Inicio',
-      icon: 'mdi mdi-gauge',
-      submenu: [
-        { title: 'Inicio', url: '/' },
-        { title: 'Gráficas', url: 'grafics' },
-        { title: 'Barras de progreso', url: 'progress' },
-        { title: 'Promesas', url: 'promises' },
-        { title: 'Rxjs', url: 'rxjs' },
-      ]
-    },
-    {
-      title: 'Mantenimiento',
-      icon: 'mdi mdi-folder-lock-open',
-      submenu: [
-        { title: 'Usuarios', url: 'usuarios' },
-        { title: 'Hospitales', url: 'hospitales' },
-        { title: 'Médicos', url: 'medicos' }
+  public menu: MenuItem[] = [];
+  constructor(private router: Router) { }
 
-      ]
+  public loadMenu(): MenuItem[] {
+    this.menu = JSON.parse(localStorage.getItem('menu')!) || [];
+
+    if (this.menu.length === 0) {
+      this.router.navigateByUrl('/login');
     }
-  ];
 
-  constructor() { }
+    return this.menu;
+  }
 }
+

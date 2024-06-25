@@ -1,11 +1,13 @@
 import { Hospital } from "../models/hospital.model";
 import { Medico } from "../models/medico.model";
 import { Usuario } from "../models/usuario.model";
+import { MenuItem } from "./menu.interface";
 
 // LOGIN
 export interface ResponseLogin {
   ok: boolean;
   token: string;
+  menu: MenuItem[];
 }
 
 export interface ResponseGoogleAPILogin {
@@ -21,13 +23,22 @@ export interface ResponseLoginGoogle {
   email: string;
   picture: string;
   token: string;
+  menu: MenuItem[];
 }
 
 // USER
+export interface ResponseCreateUserMenu {
+  ok: boolean;
+  token: string;
+  usuario: Usuario;
+  menu: MenuItem[];
+}
+
 export interface ResponseCreateUser {
   ok: boolean;
   token: string;
   usuario: Usuario;
+  menu: MenuItem[];
 }
 
 export interface ResponseUpdateUser {
@@ -89,6 +100,18 @@ export interface ResponseSearchByCollection {
   ok: boolean;
   resultados: Usuario[] | Hospital[] | Medico[];
   total: number;
+}
+
+export interface ResponseSearchAll {
+  ok:         boolean;
+  resultados: Resultados;
+  total:      number;
+}
+
+export interface Resultados {
+  usuarios:   Usuario[];
+  hospitales: Hospital[];
+  medicos:    Medico[];
 }
 
 // GENERICS

@@ -6,6 +6,7 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { RouterModule } from '@angular/router';
 import { GooglePipe } from './pipes/google.pipe';
 import { ImageRoutePipe } from './pipes/image-route.pipe';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -19,7 +20,8 @@ import { ImageRoutePipe } from './pipes/image-route.pipe';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   exports: [
     BreadcrumbsComponent,
